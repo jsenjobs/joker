@@ -4,7 +4,7 @@
 joker 是一个轻量级的微服务容器，专为微服务开发而生。
 相较于tomcat加载war包，joker加载的entry下的jar包始终保持在一个classloader下面，借助于vertx，他们之间可以通过eventbus、服务发现等进行通讯
 
-![image][entry-server]
+<img src="entry-server" width="280" />
 
 ## Get Start
 ## Joker目录结构：
