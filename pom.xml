@@ -139,6 +139,11 @@
             <artifactId>vertx-dropwizard-metrics</artifactId>
             <version>${vertx-version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-lang-js</artifactId>
+            <version>${vertx-version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -149,6 +154,12 @@
             <groupId>org.jdom</groupId>
             <artifactId>jdom</artifactId>
             <version>2.0.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.4.1</version>
         </dependency>
     </dependencies>
  

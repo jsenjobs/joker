@@ -45,7 +45,7 @@
         <multicast-port>54327</multicast-port>
       </multicast>
       <tcp-ip enabled="true">
-        <interface>192.168.10.249</interface>
+        <interface>192.168.0.176</interface>
         <interface>192.168.0.24</interface>
       </tcp-ip>
       <aws enabled="false">

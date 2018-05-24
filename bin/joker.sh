@@ -31,7 +31,7 @@ CLASSPATH=.:"$PRGDIR../static":"$PRGDIR../entry":"$PRGDIR../lib":"$PRGDIR../joke
 
 JAVA_OPTS="$JAVA_OPTS $JSSE_OPTS"
 
-JAVA_OPTS="$JAVA_OPTS -Dhazelcast.logging.type=slf4j -Dvertx.hazelcast.config=$PRGDIR../conf/cluster/hazelcast.xml -Dvertx.zookeeper.config=$PRGDIR../conf/cluster/zookeeper.json"
+JAVA_OPTS="$JAVA_OPTS -Dhazelcast.logging.type=slf4j -Dvertx.hazelcast.config=$PRGDIR../conf/cluster/hazelcast.xml -Dvertx.zookeeper.config=$PRGDIR../conf/cluster/zookeeper.json -Dorg.apache.zookeeper.level=INFO"
 
 if [ "$1" = "run" ] ; then
 	shift
@@ -96,6 +96,38 @@ elif [ "$1" = "start" ] ; then
   fi
 
   echo "Joker started."
+
+
+elif [ "$1" = "restart" ] ; then
+  shift
+  touch "$JOKER_OUT"
+  eval $_NOHUP "\"$_RUNJAVA\"" $JAVA_OPTS \
+	  -classpath "\"$CLASSPATH\"" \
+	  com.jsen.joker.boot.loader.Boot "$@" restart \
+	  >> "$JOKER_OUT" 2>&1 "&"
+
+	echo $JOKER_PID
+  if [ ! -z "$JOKER_PID" ]; then
+    echo $! > "$JOKER_PID"
+  fi
+
+  echo "Joker restarted."
+
+
+elif [ "$1" = "rerun" ] ; then
+  shift
+  touch "$JOKER_OUT"
+  eval "\"$_RUNJAVA\"" $JAVA_OPTS \
+	  -classpath "\"$CLASSPATH\"" \
+	  com.jsen.joker.boot.loader.Boot "$@" restart
+
+	echo $JOKER_PID
+  if [ ! -z "$JOKER_PID" ]; then
+    echo $! > "$JOKER_PID"
+  fi
+
+  echo "Joker restarted."
+
 
 
 elif [ "$1" = "stop" ] ; then
@@ -219,9 +251,10 @@ else
 
   echo "Usage: joker.sh ( commands ... )"
   echo "commands:"
-  echo "  run               Start Catalina in the current window"
-  echo "  start             Start Catalina in a separate window"
-  echo "  stop              Stop Catalina, waiting up to 5 seconds for the process to end"
+  echo "  run               Start Joker in the current window"
+  echo "  start             Start Joker in a separate window"
+  echo "  restart           Restart Joker in a separate window"
+  echo "  stop              Stop Joker, waiting up to 5 seconds for the process to end"
   echo "  install           Install dependcy defined in pom.xml to lib directory, system need mvn installed"
   echo "Note: Waiting for the process to end and use of the -force option require that \$JOKER_PID is defined"
   exit 1
